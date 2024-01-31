@@ -48,7 +48,7 @@ if (nombreUsuaruio != false && nombreUsuaruio===usuario1.nombre) {
     if(online){
         alert(`bienvenido al menu principal ${usuario1.nombre} ${usuario1.apellido}`);
         let saldo = 40000
-        let opcion = prompt("Elegi una opcion: \n1-Saldo \n2- Retiro de dinero \n3- Deposito \n4- Cuenta con tarjeta de puntos\nPresione x para salir de sistema");
+        let opcion = prompt("Elegi una opcion: \n1-Saldo \n2- Retiro de dinero \n3- Deposito \n4- Cuenta con tarjeta de puntos\nX-Presione x para salir de sistema");
         while (opcion != "X" && opcion !="x"){
             switch(opcion){
                 case "1": alert(`Tu saldo es $${saldo}`)
@@ -60,7 +60,7 @@ if (nombreUsuaruio != false && nombreUsuaruio===usuario1.nombre) {
                 case "4": tieneTarjetaDePuntos()
             }
 
-            opcion = prompt("Elegi una opcion \n 1 Saldo \n 2 Retiro de dinero \n 3 Deposito \n4- Cuenta con tarjeta de puntos \n Presione x para salir de sistema");
+            opcion = prompt("Elegi una opcion \n1-Saldo \n2-Retiro de dinero \n3-Deposito \n4-Cuenta con tarjeta de puntos \nX-Presione x para salir de sistema");
         }
         
         function retirarDinero(){
