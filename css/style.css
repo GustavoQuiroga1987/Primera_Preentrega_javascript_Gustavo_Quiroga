@@ -10,7 +10,7 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url(../assets/FondoInicio.avif);
+    background-image: url(../assets/fondos-de-colores.jpg);
     background-size: cover;
     background-position: center;
 }
@@ -33,3 +33,37 @@ header{
     user-select: none;
     cursor: pointer;
 }
+
+.icon{
+    width: 3%;
+    height: 3%;
+    margin: 10px;
+}
+
+.form-label{
+    font-size: 20px;
+    color: bisque;
+}
+
+.contenido-active{
+    display: inline-block;
+    align-items: center;
+    
+    padding: 20%;
+    width: 80%;
+    height: 50%;
+    border-radius: 5%;
+    background-color: rgb(249, 248, 246);
+}
+
+.operaciones{
+    display: none;
+    flex-direction: column;
+}
+
+.operacion{
+    display: inline-block;
+    margin-right: 20%;
+    margin: 20%;
+}
+

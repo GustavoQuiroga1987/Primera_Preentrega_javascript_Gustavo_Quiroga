@@ -1,91 +1,133 @@
 //Usuarios
 
-const usuario1= {
-    id:1,
-    nombre:"gustavo",
-    apellido:"quiroga",
-    passwordSaved:2236,
-    dni:33106354,
-    tarjetas:["visa debito","visa credito" ,"tarjeta de puntos"]
+function usuario(id , nombre , apellido , saldo , puntos , password ,dni , tarjetas){
+    this.id = id
+    this.nombre = nombre
+    this.apellido = apellido
+    this.saldo = saldo
+    this.puntos = puntos
+    this.password = password
+    this.dni = dni
+    this.tarjetas =tarjetas
+
 }
 
-const usuario2= {
-    id:2,
-    nombre:"cecilia",
-    apellido:"osiglio",
-    passwordSaved:1234,
-    dni:32908422,
-    tarjetas:["visa debito","visa credito","mastercard credito"]
-}
+//Creacion de usuarios
+const usuario1 = new usuario(1 ,"gustavo", "quiroga",25000,650,2236,33106354,["visa debito" , "visa credito" ,"tarjeta de puntos"])
+const usuario2 = new usuario(2 , "cecilia" ,"osiglio",39000,0,1234,32908422,["visa debito" , "visa credito" , "mastercard credito"])
+console.log(usuario1)
+
 
 //Menu Login
 
-let nombreUsuaruio = prompt("Ingrese su nombre de usuario");
-let online = false;
+let online = false
+let submit = document.getElementById("submit");
+submit.onclick=logear
 
-if (nombreUsuaruio != false && nombreUsuaruio===usuario1.nombre) {
-    alert(`Bienvenido   ${usuario1.nombre} ${usuario1.apellido}`);
-    for (let i = 2; i >= 0; i--) {
-        ingresarPassword = parseInt(prompt("ingrese su password de 4 digitos"));
-        if (usuario1.passwordSaved ===ingresarPassword) {
-            alert("Login exitoso");
-            online = true;
-            break
-        } else {
-            alert("El password ingresado es incorecto te quedan " +i+" intentos");
-        }while(i==0){
-            alert("La app se cerrara debido a que no se ingreso la contraseña correcta intentelo denuevo mas tarde")
-            break
-        }
-    }
-} else {
-    alert("no se ingreso ningun dato o el usuario no existe");
+function logear(){
+
+let loginNombre = document.getElementById("login-nombre").value;
+let loginPassword = document.getElementById("login-password").value;
+
+
+if (loginNombre==usuario1.nombre && loginPassword==usuario1.password) {
+    online=true
+    let contenido = document.querySelector(".contenido").innerHTML=`<div class="contenido-active">
+    <h2>Bienvenido ${usuario1LS.nombre}</h2>
+    <br>
+    <h2>Tu salgo es de $${usuario1LS.saldo}</h2>
+    <br>
+    </div>`
+
+    let operaciones = document.querySelector(".operaciones");
+    operaciones.style.display="flex"   
+
+}
+else{
+
+let resultado = document.querySelector(".resultado")
+
+resultado.className= "my-3 p-3 border border-danger text-danger";
+resultado.innerHTML="El usuario ingresado no existe"
 }
 
+
+}
 //Menu app 
+
 //Banco digital
 
-    if(online){
-        alert(`bienvenido al menu principal ${usuario1.nombre} ${usuario1.apellido}`);
-        let saldo = 40000
-        let opcion = prompt("Elegi una opcion: \n1-Saldo \n2- Retiro de dinero \n3- Deposito \n4- Cuenta con tarjeta de puntos\nX-Presione x para salir de sistema");
-        while (opcion != "X" && opcion !="x"){
-            switch(opcion){
-                case "1": alert(`Tu saldo es $${saldo}`)
-                    break
-                case "2": retirarDinero()
-                    break
-                case "3": ingresarDinero()
-                    break
-                case "4": tieneTarjetaDePuntos()
-            }
+//Local Storage
+localStorage.setItem(`usuario1` , JSON.stringify(usuario1))
+    let usuario1LS = JSON.parse(localStorage.getItem("usuario1"))
 
-            opcion = prompt("Elegi una opcion \n1-Saldo \n2-Retiro de dinero \n3-Deposito \n4-Cuenta con tarjeta de puntos \nX-Presione x para salir de sistema");
-        }
+//variables del DOM   
+let depositar = document.getElementById("depositar");
+let extraccion = document.getElementById("extraccion");
+let consultar = document.getElementById("consultar");
+let resultadoOperaciones = document.querySelector(".resultado-operaciones")
+
+
+//eventos
+
+depositar.onclick=ingresarDinero
+extraccion.onclick=retirarDinero
+consultar.onclick=tieneTarjetaDePuntos
+
+
+
+//funciones
+
+function ingresarDinero(){
+    let deposito = parseInt(prompt("Ingrese el monto a depositar"))
+    if(!isNaN(deposito)){
         
-        function retirarDinero(){
-            let retiro = parseInt(prompt("Ingrese el monto a extraer"))
-            if(retiro <= saldo){
-                saldo-=retiro
-                alert(`Retiro exitoso. Tu nuevo saldo es $${saldo}`)
-            }else{
-                alert("Saldo insuficiente")
-            }
-        }
+        usuario1.saldo+=deposito
+        resultadoOperaciones.className= "my-3 p-3 alert alert-primary";
+        resultadoOperaciones.innerHTML=`<p>Deposito exitoso. Tu nuevo saldo es $${usuario1.saldo}</p>` 
+        let contenido = document.querySelector(".contenido").innerHTML=`<div class="contenido-active">
+        <h2>Bienvenido ${usuario1.nombre}</h2>
+        <br>
+        <h2>Tu saldo es de $${usuario1.saldo}</h2>
+        <br>
+        </div>`    
+}
+    else{
+        resultadoOperaciones.className= "my-3 p-3  alert alert-danger";
+        resultadoOperaciones.innerHTML=`<p>"Los datos ingresados no son validos</p>`
+}
+}
 
-        function ingresarDinero(){
-            let deposito = parseInt(prompt("Ingrese el monto a depositar"))
-            saldo+=deposito
-            alert(`Deposito exitoso. Tu nuevo saldo es $${saldo}`)
 
-        }
-
-        function tieneTarjetaDePuntos(){
+function retirarDinero(){
+    let retiro = parseInt(prompt("Ingrese el monto a extraer"))
+    if(retiro >= usuario1.saldo || isNaN(retiro)){
+        resultadoOperaciones.className= "my-3 p-3  alert alert-danger";
+        resultadoOperaciones.innerHTML=`<p>Saldo insuficiente o los datos ingresados son invalidos</p>`
+    }
+    else{
+        usuario1.saldo-=retiro
+        resultadoOperaciones.className= "my-3 p-3 alert alert-primary";
+        resultadoOperaciones.innerHTML=`<p>Retiro exitoso. Tu nuevo saldo es $${usuario1.saldo}</p>` 
+        let contenido = document.querySelector(".contenido").innerHTML=`<div class="contenido-active">
+        <h2>Bienvenido ${usuario1.nombre}</h2>
+        <br>
+        <h2>Tu salgo es de $${usuario1.saldo}</h2>
+        <br>
+    </div>` 
+    }  
+}
+    
+    
+function tieneTarjetaDePuntos(){
             let tarjetadepuntos = usuario1.tarjetas.find(item=>item=="tarjeta de puntos")
             if(tarjetadepuntos=="tarjeta de puntos"){
-                alert("El usuario cuenta con tarjeta de puntos")
+                resultadoOperaciones.className= "my-3 p-3 alert alert-primary";
+                resultadoOperaciones.innerHTML=`<p>El usuario cuenta con ${usuario1.puntos} puntos en su tarjeta</p>`
             }else{
-                alert("El usuario no cuenta con tarjeta de puntos")
+                resultadoOperaciones.className= "my-3 p-3  alert alert-danger";
+                resultadoOperaciones.innerHTML=`<p>El usuario no cuenta con tarjeta puntos</p>`
             }
-        }
-    }
+}
+    
+    
