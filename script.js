@@ -28,7 +28,7 @@ function logear(){
 
 let loginNombre = document.getElementById("login-nombre").value;
 let loginPassword = document.getElementById("login-password").value;
-let usuarioOnline ={loginNombre,loginPassword}
+
 
 
 
