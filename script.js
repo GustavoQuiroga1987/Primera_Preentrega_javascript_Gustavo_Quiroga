@@ -28,16 +28,23 @@ function logear(){
 
 let loginNombre = document.getElementById("login-nombre").value;
 let loginPassword = document.getElementById("login-password").value;
+let usuarioOnline ={loginNombre,loginPassword}
+
 
 
 if (loginNombre==usuario1.nombre && loginPassword==usuario1.password) {
     online=true
+
+    localStorage.setItem(`usuario1` , JSON.stringify(usuario1))
+    let usuario1LS = JSON.parse(localStorage.getItem("usuario1"))
+
     let contenido = document.querySelector(".contenido").innerHTML=`<div class="contenido-active">
     <h2>Bienvenido ${usuario1LS.nombre}</h2>
     <br>
     <h2>Tu salgo es de $${usuario1LS.saldo}</h2>
     <br>
     </div>`
+
 
     let operaciones = document.querySelector(".operaciones");
     operaciones.style.display="flex"   
@@ -57,31 +64,31 @@ resultado.innerHTML="El usuario ingresado no existe"
 
 //Banco digital
 
-//Local Storage
-localStorage.setItem(`usuario1` , JSON.stringify(usuario1))
-    let usuario1LS = JSON.parse(localStorage.getItem("usuario1"))
 
 //variables del DOM   
 let depositar = document.getElementById("depositar");
 let extraccion = document.getElementById("extraccion");
 let consultar = document.getElementById("consultar");
 let resultadoOperaciones = document.querySelector(".resultado-operaciones")
+let formDeposito = document.querySelector(".form-deposito")
+let formExtraccion = document.querySelector(".form-extraccion")
 
 
 //eventos
 
 depositar.onclick=ingresarDinero
 extraccion.onclick=retirarDinero
-consultar.onclick=tieneTarjetaDePuntos
+consultar.onclick=checkearDatosUsuario
 
 
 
 //funciones
 
 function ingresarDinero(){
-    let deposito = parseInt(prompt("Ingrese el monto a depositar"))
+
+    let deposito = parseInt(formDeposito.value)
+    console.log(deposito);
     if(!isNaN(deposito)){
-        
         usuario1.saldo+=deposito
         resultadoOperaciones.className= "my-3 p-3 alert alert-primary";
         resultadoOperaciones.innerHTML=`<p>Deposito exitoso. Tu nuevo saldo es $${usuario1.saldo}</p>` 
@@ -90,20 +97,23 @@ function ingresarDinero(){
         <br>
         <h2>Tu saldo es de $${usuario1.saldo}</h2>
         <br>
-        </div>`    
+        </div>`  
+        formDeposito.value=""  
 }
     else{
         resultadoOperaciones.className= "my-3 p-3  alert alert-danger";
         resultadoOperaciones.innerHTML=`<p>"Los datos ingresados no son validos</p>`
+        formDeposito.value="" 
 }
 }
 
 
 function retirarDinero(){
-    let retiro = parseInt(prompt("Ingrese el monto a extraer"))
+    let retiro = parseInt(formExtraccion.value)
     if(retiro >= usuario1.saldo || isNaN(retiro)){
         resultadoOperaciones.className= "my-3 p-3  alert alert-danger";
         resultadoOperaciones.innerHTML=`<p>Saldo insuficiente o los datos ingresados son invalidos</p>`
+        formExtraccion.value="" 
     }
     else{
         usuario1.saldo-=retiro
@@ -115,19 +125,31 @@ function retirarDinero(){
         <h2>Tu salgo es de $${usuario1.saldo}</h2>
         <br>
     </div>` 
+        formExtraccion.value="" 
+
     }  
 }
     
     
-function tieneTarjetaDePuntos(){
-            let tarjetadepuntos = usuario1.tarjetas.find(item=>item=="tarjeta de puntos")
-            if(tarjetadepuntos=="tarjeta de puntos"){
-                resultadoOperaciones.className= "my-3 p-3 alert alert-primary";
-                resultadoOperaciones.innerHTML=`<p>El usuario cuenta con ${usuario1.puntos} puntos en su tarjeta</p>`
-            }else{
-                resultadoOperaciones.className= "my-3 p-3  alert alert-danger";
-                resultadoOperaciones.innerHTML=`<p>El usuario no cuenta con tarjeta puntos</p>`
-            }
+function checkearDatosUsuario(){
+    fetch(`usuarios.json`)
+    .then(respuesta=>respuesta.json())
+    .then(data=>{
+        let contenido="";
+        for(const usuario of  data){
+        if(usuario.id==1){
+            contenido=`<div class="card" style="width: 18rem;">
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item">${usuario.nombre} ${usuario.apellido}</li>
+            <li class="list-group-item">DNI:${usuario.dni}</li>
+            <li class="list-group-item">Domicilio:${usuario.domicilio}</li>
+            <li class="list-group-item">Localidad:${usuario.localidad}</li>
+            <li class="list-group-item">Codigo Postal:${usuario.codigopostal}</li>
+            </ul>
+        </div>`
+    } 
+}   
+
+document.getElementById("contenido").innerHTML=contenido
+    })
 }
-    
-    

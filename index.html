@@ -12,7 +12,7 @@
         <h2 class="logo">Outerheaven</h2>
         <img  class="icon" src="./assets/user-solid.svg" alt="">
     </header>
-    <div class="contenido">
+    <div class="contenido" id="contenido">
     <form>
         <div class="mb-3">
             <label for="login-nombre" class="form-label">Ingrese su nombre de usuario</label>
@@ -30,12 +30,20 @@
 <div class="operaciones">
     `<div class="operacion">
         <button type="button"class="btn btn-info" id="depositar">Depositar</button>
+        <div class="input-group mb-3">
+            <span class="input-group-text">$</span>
+            <input type="number" class="form-control form-deposito" aria-label="Amount (to the nearest dollar)">
+        </div>
     </div>
     <div class="operacion">
         <button type="button" class="btn btn-info" id="extraccion">Extraccion</button>
+        <div class="input-group mb-3">
+            <span class="input-group-text">$</span>
+            <input type="number" class="form-control form-extraccion" aria-label="Amount (to the nearest dollar)">
+        </div>
     </div>
     <div class="operacion">
-        <button type="button"class="btn btn-info" id="consultar">Consultar puntos</button>
+        <button type="button"class="btn btn-info" id="consultar">Consultar mis datos</button>
     </div>`
     
 </div>
