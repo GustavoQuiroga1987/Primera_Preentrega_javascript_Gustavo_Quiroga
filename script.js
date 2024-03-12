@@ -73,6 +73,7 @@ resultado.innerHTML=`<p class="my-3 p-3 border border-danger text-danger">El usu
 let depositar = document.getElementById("depositar");
 let extraccion = document.getElementById("extraccion");
 let consultar = document.getElementById("consultar");
+let cerrar =document.getElementById("cerrar-seccion")
 let resultadoOperaciones = document.querySelector(".resultado-operaciones")
 let formDeposito = document.querySelector(".form-deposito")
 let formExtraccion = document.querySelector(".form-extraccion")
@@ -83,6 +84,7 @@ let formExtraccion = document.querySelector(".form-extraccion")
 depositar.onclick=ingresarDinero
 extraccion.onclick=retirarDinero
 consultar.onclick=checkearDatosUsuario
+cerrar.onclick=cerrarSeccion
 
 
 
@@ -167,6 +169,8 @@ function checkearDatosUsuario(){
         document.getElementById("contenido").innerHTML=contenido
     } 
 
-    
+function cerrarSeccion() {
+    location.reload()
+}   
 
     
