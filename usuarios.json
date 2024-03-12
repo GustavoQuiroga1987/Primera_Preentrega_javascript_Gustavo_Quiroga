@@ -1,7 +1,7 @@
 [
     {"id":1,
-    "nombre":"Gustavo",
-    "apellido":"Quiroga",
+    "nombre":"gustavo",
+    "apellido":"quiroga",
     "saldo":25000 ,
     "puntos":650 ,
     "password":2236 ,
@@ -12,8 +12,8 @@
     "tarjetas":["visa debito" , "visa credito" ,"tarjeta de puntos"]},
 
     {"id":2,
-    "nombre":"Cecilia",
-    "apellido":"Osiglio",
+    "nombre":"cecilia",
+    "apellido":"osiglio",
     "saldo":39000,
     "puntos":0,
     "password":1234,
@@ -24,8 +24,8 @@
     "tarjetas":["visa debito" , "visa credito" , "mastercard credito"]},
 
     {"id":3,
-    "nombre":"Juan",
-    "apellido":"Perez",
+    "nombre":"juan",
+    "apellido":"perez",
     "saldo":50000,
     "puntos":1900,
     "password":4578,
