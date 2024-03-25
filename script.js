@@ -5,22 +5,22 @@
 let submit = document.getElementById("submit");
 submit.onclick=logear
 
-function logear(){
-
+function cargarUsuarios(){
 fetch(`usuarios.json`)
 .then(respuesta=>respuesta.json())
 .then(data=>{
     localStorage.setItem("users",JSON.stringify(data))
-})  
-    
+}) 
+}
+cargarUsuarios()
+
+function logear(){ 
 let users = JSON.parse(localStorage.getItem(`users`))
 let loginNombre = document.getElementById("login-nombre").value;
 let loginPassword = document.getElementById("login-password").value;
 
 
 if(usuarioOnline=users.find(user=>user.nombre===loginNombre && user.password===parseInt(loginPassword))){
-
-
 
     let contenido = document.querySelector(".contenido").innerHTML=`<div class="contenido-active">
     <h2>Bienvenido ${usuarioOnline.nombre}</h2>
