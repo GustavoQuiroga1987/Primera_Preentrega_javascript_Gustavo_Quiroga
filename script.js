@@ -1,22 +1,3 @@
-//Usuarios
-
-function usuario(id , nombre , apellido , saldo , puntos , password ,dni , tarjetas){
-    this.id = id
-    this.nombre = nombre
-    this.apellido = apellido
-    this.saldo = saldo
-    this.puntos = puntos
-    this.password = password
-    this.dni = dni
-    this.tarjetas =tarjetas
-
-}
-
-//Creacion de usuarios
-const usuario1 = new usuario(1 ,"gustavo", "quiroga",25000,650,2236,33106354,["visa debito" , "visa credito" ,"tarjeta de puntos"])
-const usuario2 = new usuario(2 , "cecilia" ,"osiglio",39000,0,1234,32908422,["visa debito" , "visa credito" , "mastercard credito"])
-
-
 
 
 //Menu Login
@@ -33,14 +14,13 @@ fetch(`usuarios.json`)
 })  
     
 let users = JSON.parse(localStorage.getItem(`users`))
-console.log(users);
 let loginNombre = document.getElementById("login-nombre").value;
 let loginPassword = document.getElementById("login-password").value;
 
 
 if(usuarioOnline=users.find(user=>user.nombre===loginNombre && user.password===parseInt(loginPassword))){
 
-console.log(usuarioOnline);
+
 
     let contenido = document.querySelector(".contenido").innerHTML=`<div class="contenido-active">
     <h2>Bienvenido ${usuarioOnline.nombre}</h2>
@@ -100,7 +80,6 @@ function ingresarDinero(){
     </div>`
 
     let deposito = parseInt(formDeposito.value)
-    console.log(deposito);
     if(!isNaN(deposito)){
         usuarioOnline.saldo+=deposito
         resultadoOperaciones.className= "my-3 p-3 alert alert-primary";
